@@ -67,11 +67,18 @@ public class Board {
 
         position += value;
 
-        if (position >= 100){
-            //If the new position is 100 (or above), the player wins!
-            playerPositions.put(player, 100);
+        if (position == 100) {
+            //If the new position is 100, the player wins!
+            playerPositions.put(player, position);
+            player.setNewPosition(playerPositions.get(player));
             return true;
-        } else {
+        }
+        else if(position > 100)
+        {
+            playerPositions.put(player,position - value);
+            return false;
+        }
+        else if (position < 100) {
             //If the new position is less than 100
 
             //Check if the new position is the starting point for a snake
@@ -154,7 +161,7 @@ public class Board {
             player.setNewPosition(playerPositions.get(player));
             return false;
         }
-
+    return false;
     }
 
     /**

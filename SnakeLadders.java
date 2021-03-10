@@ -28,7 +28,7 @@ public class SnakeLadders {
         // ### SneakySteve's Code ###
         scan.nextLine(); // Clear the scanner
         ArrayList<Player> players = new ArrayList<Player>(); // Define a new arraylist of players
-
+        ArrayList<Player> pfinished = new ArrayList<Player>(); // Define a new arraylist of players that finished
         // For each player
         for (int i = 0; i < numPlayers; i++) {
             System.out.println("Please enter a name for player " + (i+1) + ":"); // Ask for a player name
@@ -39,22 +39,19 @@ public class SnakeLadders {
 
         //Initialize the board.
         Board board = new Board(players);
-
         //Loop until a player reaches the final spot.
         //Players take turns to roll the die and move on the board
         boolean done = false;
         int playerIdx = 0;
-        while (!done){
+        while (numPlayers != 1){
             //Player takes turn
             Player currPlayer = players.get(playerIdx);
             int roll = currPlayer.takeTurn();
 
             //Update the board
             done = board.movePlayer(currPlayer, roll);
-
             // Print the result of the player's turn to the screen
             currPlayer.outputResultOfTurn(roll); // SneakySteve's Code
-
             //Print the board
             System.out.println(board);
             System.out.println("-----------------------\n");
@@ -62,14 +59,15 @@ public class SnakeLadders {
             //If we're done, print end message.
             if (done){
                 System.out.println(currPlayer + " wins");
+                players.remove(playerIdx);
+                numPlayers = numPlayers - 1;
+                playerIdx = playerIdx - 1;
             }
-
-            //Set up for next player
+            //Set up for next players
             playerIdx++;
             if (playerIdx == numPlayers){
                 playerIdx = 0;
             }
-
         }
     }
 }
